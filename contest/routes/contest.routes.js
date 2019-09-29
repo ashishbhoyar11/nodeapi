@@ -22,6 +22,6 @@ var upload = multer({storage: storage});
     app.post('/update_contest/:contestId',upload.single('image'), contests.updateContest);
     app.post('/get_friends_contest', contests.friendsContest);
 
-    app.post('/get_friends_contest_comments', contests.friendsContestComments);
+    app.post('/likeByFriends/:userId', contests.friendsLikeToContest);
 }
 
