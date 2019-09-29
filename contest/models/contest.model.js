@@ -7,6 +7,7 @@ const ContestSchema = mongoose.Schema({
     date:{ type: Date, default: Date.now() },
     image:String,
     userId: { type: mongoSchema.Types.ObjectId, ref: 'Register' },
+    like:{ type: mongoSchema.Types.ObjectId, ref: 'Register' }
 }, {
     timestamps: true
 });

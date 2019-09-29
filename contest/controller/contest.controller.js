@@ -179,5 +179,32 @@ exports.contestDelete = (req, res) => {
             message: "Could not delete Contest with id " + req.params.contestId
         });
     });
-} 
+}
+
+exports.friendsLikeToContest = (req, res) => {
+
+Contest.update({_id:req.params.userId}, { $push: { like: req.body.id} },)
+  .then(user => {
+    
+      if(!user) {
+          return res.status(404).send({
+              message: "contest not found with id " + req.params.userId
+          });
+      }
+      if (user) {
+        console.log('user : '+user+ ' Body :'+req.body.id);
+        res.send({status:true,message:"Like Contest"});
+      }
+      
+  }).catch(err => {
+      if(err.kind === 'ObjectId') {
+          return res.status(404).send({
+              message: "user not found with id " + req.params.userId
+          });                
+      }
+      return res.status(500).send({
+          message: "Error like contest with id " + req.params.userId
+      });
+  });
+}    
 
