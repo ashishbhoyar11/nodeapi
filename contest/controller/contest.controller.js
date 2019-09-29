@@ -1,4 +1,5 @@
 const Contest=require('../models/contest.model.js');
+const Comments=require('../models/contestcomment.model.js');
 var fs = require('fs');
 
 // Create and Save a new Note
@@ -180,4 +181,31 @@ exports.contestDelete = (req, res) => {
         });
     });
 } 
+
+
+exports.friendsContestComments = (req, res) => {
+    console.log(req.body);
+    if(!req.body) {
+        return res.status(400).send({
+            message: "Contest comment can not be empty"
+        });
+    }
+
+    // Create a Comments
+    const comment = new Comments({
+        comment: req.body.comment, 
+        userId: req.body.userid,
+        contestId: req.body.contestid
+    });
+
+    comment.save()
+    .then(data => {
+        res.send({"status" : true,"message" : "Comment Upload Successfully"});
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while creating the Comment."
+        });
+    });
+
+}   
 
